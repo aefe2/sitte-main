@@ -16,6 +16,19 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+THUMBNAIL_ALIASES = {
+   '': {
+       'default': {
+           'size':(96, 96),
+           'crop':'scale',
+       },
+   },
+}
+
+THUMBNAIL_BASEDIR = 'thumbnails'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -40,6 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'bootstrap4',
+    'django_cleanup',
+    'easy_thumbnails'
 ]
 
 AUTH_USER_MODEL = 'main.AdvUser'
@@ -67,6 +82,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.middlewares.bboard_context_processor',
             ],
         },
     },
@@ -133,3 +149,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = "username@gmail.com"
 EMAIL_HOST_PASSWORD = "password"
 EMAIL_PORT = 587
+

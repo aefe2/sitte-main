@@ -9,11 +9,14 @@ from .views import BBPasswordChangeView
 from .views import RegisterUserView, RegisterDoneView
 from .views import user_activate
 from .views import DeleteUserView
-
+from .views import by_rubric
+from django.conf.urls.static import static
 
 app_name = 'main'
 
 urlpatterns = [
+   path('<int:pk>/', by_rubric, name='by_rubric'),
+   path('<str:page>/', other_page, name='other'),
    path('accounts/profile/delete/', DeleteUserView.as_view(), name='profile_delete'),
    path('accounts/profile/change/', ChangeUserInfoView.as_view(), name='profile_change'),
    path('accounts/register/activate/<str:sign>/', user_activate, name='register_activate'),
@@ -30,3 +33,7 @@ urlpatterns = [
    path('<str:page>/', other_page, name='other'),
    path('', index, name='index')
 ]
+
+if settings.DEBUG:
+   urlpatterns.append(path('static/<path:path>', never_cache(serve)))
+   urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

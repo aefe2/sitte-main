@@ -29,6 +29,9 @@ from django.views.generic import UpdateView, CreateView, DeleteView
 from django.contrib.auth import logout
 from django.contrib import messages
 
+def by_rubric(request, pk):
+   pass
+
 class DeleteUserView(LoginRequiredMixin, DeleteView):
    model = AdvUser
    template_name = 'main/delete_user.html'

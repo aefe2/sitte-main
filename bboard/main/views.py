@@ -35,6 +35,9 @@ from django.db.models import Q
 from .forms import SearchForm
 from .models import SubRubric, Bb
 
+from django.shortcuts import redirect
+from .forms import BbForm, AIFormSet
+
 class DeleteUserView(LoginRequiredMixin, DeleteView):
    model = AdvUser
    template_name = 'main/delete_user.html'
@@ -110,7 +113,9 @@ class BBLoginView(LoginView):
 
 @login_required
 def profile(request):
-   return render(request, 'main/profile.html')
+   bbs = Bb.objects.filter(author=request.user.pk)
+   context = {'bbs': bbs}
+   return render(request, 'main/profile.html', context)
 
 
 def other_page(request, page):
@@ -149,3 +154,21 @@ def index(request):
    bbs = Bb.objects.filter(is_active=True)[:10]
    context = {'bbs':bbs}
    return render(request, 'main/index.html', context)
+
+@login_required
+def profile_bb_add(request):
+   if request.method == 'POST':
+       form = BbForm(request.POST, request.FILES)
+       if form.is_valid():
+           bb = form.save()
+           formset = AIFormSet(request.POST, request.FILES, instance=bb)
+           if formset.is_valid():
+               formset.save()
+               messages.add_message(request, messages.SUCCESS,
+                                    'Объявление добавлено')
+               return redirect('main:profile')
+   else:
+       form = BbForm(initial={'author': request.user.pk})
+       formset = AIFormSet()
+   context = {'form': form, 'formset': formset}
+   return render(request, 'main/profile_bb_add.html', context)

@@ -10,11 +10,13 @@ from .views import RegisterUserView, RegisterDoneView
 from .views import user_activate
 from .views import DeleteUserView
 from .views import by_rubric
-from django.conf.urls.static import static
+from .views import detail
 
 app_name = 'main'
 
 urlpatterns = [
+   path('<int:rubric_pk>/<int:pk>/', detail, name='detail'),
+   path('<int:pk>/', by_rubric, name='by_rubric'),
    path('<int:pk>/', by_rubric, name='by_rubric'),
    path('<str:page>/', other_page, name='other'),
    path('accounts/profile/delete/', DeleteUserView.as_view(), name='profile_delete'),
@@ -33,7 +35,3 @@ urlpatterns = [
    path('<str:page>/', other_page, name='other'),
    path('', index, name='index')
 ]
-
-if settings.DEBUG:
-   urlpatterns.append(path('static/<path:path>', never_cache(serve)))
-   urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

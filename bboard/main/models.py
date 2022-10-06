@@ -7,8 +7,6 @@ from .utilities import send_activation_notification
 from .utilities import get_timestamp_path
 
 
-
-
 class AdvUser(AbstractUser):
     is_activated = models.BooleanField(default=True, db_index=True,
                                        verbose_name='Прошел активацию?')
@@ -17,6 +15,10 @@ class AdvUser(AbstractUser):
 
     class Meta(AbstractUser.Meta):
         pass
+    def delete(self, *args, **kwargs):
+        for bb in self.bb_set.all():
+            bb.delete()
+        super().delete(*args, **kwargs)
 
 class Rubric(models.Model):
    name = models.CharField(max_length=20, db_index=True, unique=True,
@@ -98,3 +100,4 @@ def user_registrated_dispatcher(sender, **kwargs):
 
 
 user_registrated.connect(user_registrated_dispatcher)
+

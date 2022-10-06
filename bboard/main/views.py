@@ -172,3 +172,5 @@ def profile_bb_add(request):
        formset = AIFormSet()
    context = {'form': form, 'formset': formset}
    return render(request, 'main/profile_bb_add.html', context)
+
+# 64 страница

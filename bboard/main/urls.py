@@ -11,10 +11,17 @@ from .views import user_activate
 from .views import DeleteUserView
 from .views import by_rubric
 from .views import detail
+from .views import profile_bb_add
+from .views import profile_bb_delete
 
 app_name = 'main'
 
 urlpatterns = [
+   path('accounts/profile/add/', profile_bb_add, name='profile_bb_add'),
+   # path('accounts/profile/change/<int:pk>/', profile_bb_change, name='profile_bb_change'),
+   path('accounts/profile/delete/<int:pk>/', profile_bb_delete, name='profile_bb_delete'),
+   path('accounts/profile/', profile, name='profile'),
+   path('accounts/profile/', profile, name='profile'),
    path('<int:rubric_pk>/<int:pk>/', detail, name='detail'),
    path('<int:pk>/', by_rubric, name='by_rubric'),
    path('<int:pk>/', by_rubric, name='by_rubric'),

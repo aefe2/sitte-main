@@ -7,6 +7,8 @@ from django.views.static import serve
 from django.conf.urls.static import static
 
 urlpatterns = [
+   path('captcha', include('captcha.urls')),
+   path('', include('main.urls', namespace='')),
    path('admin/', admin.site.urls),
    path('', include('main.urls', namespace='')),
 ]

@@ -10,14 +10,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView
 
 from .forms import ChangeUserInfoForm
 from .models import AdvUser
 
 from django.contrib.auth.views import PasswordChangeView
 
-from django.views.generic import CreateView
 
 from .forms import RegisterUserForm
 
@@ -37,6 +35,7 @@ from .models import SubRubric, Bb
 
 from django.shortcuts import redirect
 from .forms import BbForm, AIFormSet
+
 
 
 class DeleteUserView(LoginRequiredMixin, DeleteView):
@@ -227,5 +226,4 @@ def profile_bb_delete(request, pk):
    else:
        context = {'bb': bb}
        return render(request, 'main/profile_bb_delete.html', context)
-
 

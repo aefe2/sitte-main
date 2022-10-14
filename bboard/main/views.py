@@ -11,8 +11,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 
-from .forms import ChangeUserInfoForm
-from .models import AdvUser
+from .forms import ChangeUserInfoForm, UserCommentForm, GuestCommentForm
+from .models import AdvUser, Comment
 
 from django.contrib.auth.views import PasswordChangeView
 
@@ -35,6 +35,7 @@ from .models import SubRubric, Bb
 
 from django.shortcuts import redirect
 from .forms import BbForm, AIFormSet
+
 
 
 

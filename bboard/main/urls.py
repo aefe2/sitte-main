@@ -15,6 +15,7 @@ from .views import profile_bb_add
 from .views import profile_bb_delete
 from .views import profile_bb_change
 
+
 app_name = 'main'
 
 urlpatterns = [

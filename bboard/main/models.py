@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 from django.dispatch import Signal
 
-from .utilities import send_activation_notification
+from .utilities import send_activation_notification, send_new_comment_notification
 from .utilities import get_timestamp_path
 from django.db.models.signals import post_save
 

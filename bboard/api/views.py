@@ -16,27 +16,29 @@ from .serializers import CommentSerializer
 
 @api_view(['GET'])
 def bbs(request):
-   if request.method == 'GET':
-       bbs = Bb.objects.filter(is_active=True)[:10]
-       serializer = BbSerializer(bbs, many=True)
-       return Response(serializer.data)
+    if request.method == 'GET':
+        bbs = Bb.objects.filter(is_active=True)[:10]
+        serializer = BbSerializer(bbs, many=True)
+        return Response(serializer.data)
+
 
 class BbDetailView(RetrieveAPIView):
-   queryset = Bb.objects.filter(is_active=True)
-   serializer_class = BbDetailSerializer
+    queryset = Bb.objects.filter(is_active=True)
+    serializer_class = BbDetailSerializer
+
 
 @api_view(['GET', 'POST'])
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def comments(request, pk):
-   if request.method == 'POST':
-       serializer = CommentSerializer(data=request.data)
-       if serializer.is_valid():
-           serializer.save()
-           return  Response(serializer.data, status=HTTP_201_CREATED)
-       else:
-           return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
-   else:
-       comments = Comment.objects.filter(is_active=True, bb=pk)
-       serializer = CommentSerializer(comments, many=True)
-       return Response(serializer.data)
+    if request.method == 'POST':
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+    else:
+        comments = Comment.objects.filter(is_active=True, bb=pk)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
 # Create your views here.
